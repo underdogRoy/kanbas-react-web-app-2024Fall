@@ -1,4 +1,4 @@
-import Lab from './Lab.tsx';
+import Lab from './Labs/Lab.tsx';
 import './App.css';
 import React from 'react';
 
@@ -7,6 +7,7 @@ function App() {
     <div>
       <h1>Welcome to Web Dev</h1>
       <Lab />
+
     </div>
   );
 }

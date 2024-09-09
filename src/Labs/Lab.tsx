@@ -1,5 +1,5 @@
 import React from "react";
-import Lab1 from "./Lab1.tsx";
+import Lab1 from "./Lab1/Lab1.tsx";
 import Lab2 from "./Lab2.tsx";
 import Lab3 from "./Lab3.tsx";
 

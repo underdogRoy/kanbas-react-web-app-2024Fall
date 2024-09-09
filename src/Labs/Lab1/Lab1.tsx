@@ -53,6 +53,6 @@ export default function Lab1() {
           </tfoot>
         </table>
       </div>
-
+        
         </div>
       </div>);}
