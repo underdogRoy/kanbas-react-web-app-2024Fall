@@ -24,7 +24,7 @@ export default function Assignments() {
           <li className="wd-assignment-list-item">
             {/* Complete On Your Own */}
             <a className="wd-assignment-link"
-                        href="#/Kanbas/Courses/1234/Assignments/124">
+                        href="#/Kanbas/Courses/1234/Assignments/123">
                         A2 - CSS + BOOTSTRAP
                     </a>
                     <br></br>
@@ -34,7 +34,7 @@ export default function Assignments() {
           </li>
           <li className="wd-assignment-list-item">
                     <a className="wd-assignment-link"
-                        href="#/Kanbas/Courses/1234/Assignments/125">
+                        href="#/Kanbas/Courses/1234/Assignments/123">
                         A3 - JAVASCRIPT + REACT
                     </a>
                     <br></br>
