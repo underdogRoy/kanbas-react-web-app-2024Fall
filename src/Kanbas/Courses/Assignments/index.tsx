@@ -9,6 +9,7 @@ import { FaMagnifyingGlass } from "react-icons/fa6";
 import "./AssignmentStyles.css";
 import { HiMagnifyingGlass } from "react-icons/hi2";
 import { IoEllipsisVertical } from "react-icons/io5";
+import { IoMdArrowDropdownCircle } from "react-icons/io";
 
 export default function Assignments() {
   return (
@@ -45,6 +46,7 @@ export default function Assignments() {
             {/* Module Header */}
             <div className="wd-title p-3 ps-2 bg-secondary flex items-center">
               <BsGripVertical className="me-2 fs-3" />
+              <IoMdArrowDropdownCircle className="me-2"/>
               Assignment
               
               <div className="float-end">
