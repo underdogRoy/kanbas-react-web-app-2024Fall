@@ -1,13 +1,18 @@
 import React from "react";
+import * as db from "../../Database/Database.tsx"
+import { useParams } from "react-router";
 
 export default function AssignmentEditor() {
+    const assignemts = db.assignments;
+    const {cid, aid} = useParams();
+    const assignment = assignemts.find((assignment) => assignment._id === aid && assignment.course === cid);
     return (
         <div id="wd-assignments-editor" className="container mt-4">
-            <h2>A1 - ENV + HTML</h2>
+            <h2>Assignment Name</h2>
             <div className="row mb-3">
                 <div className="col-md-8">
                     <label htmlFor="wd-name" className="form-label">Assignment Name</label>
-                    <input id="wd-name" className="form-control" value="A1 - ENV + HTML" />
+                    <input id="wd-name" className="form-control" value={`${assignment && assignment.title}`}  />
                 </div>
             </div>
             <div className="row mb-3">
