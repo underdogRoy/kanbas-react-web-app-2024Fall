@@ -78,7 +78,7 @@ export default function Assignments() {
                 <div className="p-2">
                   <a
                     className="wd-assignment-link"
-                    href={`/#/Kanbas/Courses/${cid}/Assigments/${assignment._id}`}
+                    href={`/#/Kanbas/Courses/${cid}/Assignments/${assignment._id}`}
                   >
                     {assignment&&assignment._id}
                   </a>

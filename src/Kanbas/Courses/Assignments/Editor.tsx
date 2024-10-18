@@ -3,12 +3,12 @@ import * as db from "../../Database/Database.tsx"
 import { useParams } from "react-router";
 
 export default function AssignmentEditor() {
-    const assignemts = db.assignments;
+    const assignments= db.assignments;
     const {cid, aid} = useParams();
-    const assignment = assignemts.find((assignment) => assignment._id === aid && assignment.course === cid);
+    const assignment = assignments.find((assignment) => assignment._id === aid && assignment.course === cid);
     return (
         <div id="wd-assignments-editor" className="container mt-4">
-            <h2>Assignment Name</h2>
+            
             <div className="row mb-3">
                 <div className="col-md-8">
                     <label htmlFor="wd-name" className="form-label">Assignment Name</label>
