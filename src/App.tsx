@@ -3,9 +3,12 @@ import React from 'react';
 import { HashRouter, Route, Routes, Navigate, Link } from "react-router-dom";
 import Labs from'./Labs/Labs.tsx';
 import Kanbas from './Kanbas/index.tsx';
+import store from './Kanbas/store.ts';
+import { Provider } from "react-redux";
 export default function App() {
   return (
     <HashRouter>
+      <Provider store={store}>
     <div>
 
 
@@ -17,6 +20,7 @@ export default function App() {
 
 
     </div>
+    </Provider>
     </HashRouter>
   );
 }

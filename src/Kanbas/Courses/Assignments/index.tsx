@@ -11,13 +11,22 @@ import { HiMagnifyingGlass } from "react-icons/hi2";
 import { IoEllipsisVertical } from "react-icons/io5";
 import { IoMdArrowDropdownCircle } from "react-icons/io";
 import { useParams } from "react-router";
+import { Link } from "react-router-dom";
+import { useLocation } from "react-router";
 import * as db from "../../Database/Database.tsx";
+import { useSelector, useDispatch } from "react-redux";
+import { addAssignment, updateAssignment, deleteAssignment }
+  from "./reducer.ts";
+import { useState } from "react";
+import AssignmentButton from "./Assignmentbutton.tsx";
 
 
 
-export default function Assignments() {
+export default function Assignments({assignment, assignments,setAssignment} : {setAssignment: (assignment: any) => void;
+  assignment : any; assignments : any[];
+}) {
   const { cid } = useParams();
-  const assignments = db.assignments;
+  //const assignments = db.assignments;
   return (
     <div>
       <div id="wd-assignments">
@@ -38,12 +47,15 @@ export default function Assignments() {
           >
             + Group
           </button>
+          <a 
+        href={`/#/Kanbas/Courses/${cid}/Assignments/${cid}`}>
           <button
             id="wd-add-assignment"
             className="px-4 py-2 bg-danger text-white rounded hover:bg-red-700"
+            
           >
             + Assignment
-          </button>
+          </button></a>
         </div><br/>
 
         {/* Modules List */}
@@ -79,15 +91,15 @@ export default function Assignments() {
                   <a
                     className="wd-assignment-link"
                     href={`/#/Kanbas/Courses/${cid}/Assignments/${assignment._id}`}
-                  >
-                    {assignment&&assignment._id}
+                    onClick={() => setAssignment(assignment)}>
+                    {assignment&&assignment.title}
                   </a>
                   <br />
                   <span className="text-danger">Multiple Modules</span> | <span className="fw-bold">Not available until</span> May 6 at 12:00am |<br/> 
                   <span className="fw-bold">Due</span> May 13 at 11:59pm | 100pts
                 </div>
                 </div>
-                <LessonControlButtons />
+                <AssignmentButton assignment={assignment} setAssignment={setAssignment} />
                 </div></li>
 
                 
