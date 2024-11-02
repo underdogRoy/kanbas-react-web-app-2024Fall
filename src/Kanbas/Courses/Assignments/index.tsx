@@ -19,6 +19,7 @@ import { addAssignment, updateAssignment, deleteAssignment }
   from "./reducer.ts";
 import { useState } from "react";
 import AssignmentButton from "./Assignmentbutton.tsx";
+import ProtectedContent from "../../Account/ProtectedContent.tsx";
 
 
 
@@ -49,13 +50,13 @@ export default function Assignments({assignment, assignments,setAssignment} : {s
           </button>
           <a 
         href={`/#/Kanbas/Courses/${cid}/Assignments/${cid}`}>
-          <button
+          <ProtectedContent roles={['FACULTY']}><button
             id="wd-add-assignment"
             className="px-4 py-2 bg-danger text-white rounded hover:bg-red-700"
             
           >
             + Assignment
-          </button></a>
+          </button></ProtectedContent></a>
         </div><br/>
 
         {/* Modules List */}
@@ -99,7 +100,7 @@ export default function Assignments({assignment, assignments,setAssignment} : {s
                   <span className="fw-bold">Due</span> May 13 at 11:59pm | 100pts
                 </div>
                 </div>
-                <AssignmentButton assignment={assignment} setAssignment={setAssignment} />
+                <ProtectedContent roles={['FACULTY']}><AssignmentButton assignment={assignment} setAssignment={setAssignment} /></ProtectedContent>
                 </div></li>
 
                 

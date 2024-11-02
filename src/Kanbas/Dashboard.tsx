@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 import * as db from "./Database/Database.tsx";
+import ProtectedContent from "./Account/ProtectedContent.tsx";
 export default function Dashboard(
   { courses, course, setCourse, addNewCourse,
   deleteCourse, updateCourse }: {
@@ -9,8 +10,8 @@ export default function Dashboard(
   addNewCourse: () => void; deleteCourse: (course: any) => void;
   updateCourse: () => void; })
  {
-  const { currentUser } = useSelector((state: any) => state.accountReducer);
-  const { enrollments } = db;
+  //const { currentUser } = useSelector((state: any) => state.accountReducer);
+  //const { enrollments } = db;
 
 
   /*const [courses, setCourses] = useState<any[]>(db.courses);
@@ -45,13 +46,13 @@ export default function Dashboard(
     <div id="wd-dashboard">
       <h1 id="wd-dashboard-title">Dashboard</h1> <hr />
       <h5>New Course
-          <button className="btn btn-primary float-end"
+      <ProtectedContent roles={['FACULTY']}><button className="btn btn-primary float-end"
                   id="wd-add-new-course-click"
                   onClick={addNewCourse} > Add </button>
           <button className="btn btn-warning float-end me-2"
                 onClick={updateCourse} id="wd-update-course-click">
           Update
-        </button>
+        </button></ProtectedContent>
 
       </h5><br />
       <input defaultValue={course.name} className="form-control mb-2" 
@@ -65,13 +66,7 @@ export default function Dashboard(
       <h2 id="wd-dashboard-published">Published Courses ({courses.length})</h2> <hr />
       <div id="wd-dashboard-courses" className="row">
       <div className="row row-cols-1 row-cols-md-5 g-4">
-      {courses.filter((course) =>
-      enrollments.some(
-        (enrollment) =>
-          enrollment.user === currentUser._id &&
-          enrollment.course === course._id
-         ))
-.map((course) => (
+      {courses.map((course) => (
         <div className="wd-dashboard-course col" style={{ width: "300px" }}>
         <div className="card rounded-3 overflow-hidden">
 
@@ -88,7 +83,7 @@ export default function Dashboard(
               </p>
               <button className="btn btn-primary"> Go </button>
               
-              <button onClick={(event) => {
+              <ProtectedContent roles={['FACULTY']}><button onClick={(event) => {
                       event.preventDefault();
                       deleteCourse(course._id);
                     }} className="btn btn-danger float-end"
@@ -102,7 +97,7 @@ export default function Dashboard(
             }}
             className="btn btn-warning me-2 float-end" >
             Edit
-          </button>
+          </button></ProtectedContent>
 
 
 
