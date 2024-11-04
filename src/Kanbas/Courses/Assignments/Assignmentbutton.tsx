@@ -1,18 +1,39 @@
-import { IoEllipsisVertical } from "react-icons/io5";
-import GreenCheckmark from "../Modules/GreenCheckmark.tsx";
-import { deleteAssignment } from "./reducer.ts";
-import { FaTrash } from "react-icons/fa";
-import { useDispatch } from "react-redux";
-import React from "react";
-export default function AssignmentButton({assignment,setAssignment} : {setAssignment: (assignment: any) => void; assignment : any; } ) {
-  const dispatch = useDispatch();
+import React from 'react';
+
+interface AssignmentButtonProps {
+  assignment: any;  // Replace 'any' with your assignment type
+  deleteAssignment: (assignment: any) => void;
+}
+
+const AssignmentButton: React.FC<AssignmentButtonProps> = ({ assignment, deleteAssignment }) => {
   return (
-    <div className="ms-auto">
-      <FaTrash className="fs-4 me-2 text-danger" 
-      onClick={() => {
-        dispatch(deleteAssignment(assignment._id));
-      }}/>
-      <GreenCheckmark />
-      <IoEllipsisVertical className="fs-4" />
+    <div className="modal fade" id="wd-remove-assignment-dialog">
+      <div className="modal-dialog">
+        <div className="modal-content">
+          <div className="modal-header">
+            <h5 className="modal-title">Delete Assignment</h5>
+            <button type="button" className="btn-close" data-bs-dismiss="modal"></button>
+          </div>
+          <div className="modal-body">
+            Are you sure you want to delete this assignment?
+          </div>
+          <div className="modal-footer">
+            <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">
+              Cancel
+            </button>
+            <button
+              type="button"
+              className="btn btn-danger"
+              data-bs-dismiss="modal"
+              onClick={() => deleteAssignment(assignment)}
+            >
+              Delete
+            </button>
+          </div>
+        </div>
+      </div>
     </div>
-);}
+  );
+};
+
+export default AssignmentButton;
