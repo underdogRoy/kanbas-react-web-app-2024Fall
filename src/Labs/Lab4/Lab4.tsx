@@ -11,7 +11,7 @@ import ObjectStateVariable from "./ObjectStateVariable.tsx";
 import ArrayStateVariable from "./ArrayStateVariable.tsx";
 import ParentStateComponent from "./ParentStateComponent.tsx";
 import ReduxExamples from "./ReduxExamples/index.tsx";
-
+import HelloRedux from "./ReduxExamples/HelloRedux/index.tsx";
 export default function Lab4() {
     function sayHello() {
         alert("Hello");

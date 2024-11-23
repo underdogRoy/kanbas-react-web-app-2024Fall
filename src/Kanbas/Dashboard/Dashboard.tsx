@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import * as db from "./Database/Database";
-import ProtectedContent from "./Account/ProtectedContent.tsx";
+
+import ProtectedContent from "../Account/ProtectedContent.tsx";
 
 // Types
 interface Course {

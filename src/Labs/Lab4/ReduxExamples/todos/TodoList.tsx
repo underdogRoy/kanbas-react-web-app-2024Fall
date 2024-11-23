@@ -15,5 +15,4 @@ export default function TodoList() {
       </ul>
       <hr/>
     </div>
-  );
-}
+);}
