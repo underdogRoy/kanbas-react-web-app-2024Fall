@@ -1,23 +1,52 @@
-import axios from 'axios'
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { enrollments } from "../Database/Database.tsx"
 
-export const REMOTE_SERVER = process.env.REACT_APP_REMOTE_SERVER
-export const ENROLLMENT_API = `${REMOTE_SERVER}/api/enrollments`
+const initialState = {
+  enrollments: enrollments,
+  isEnrolling: false,
+};
 
-export const getUserEnrollment = async (userId: String) => {
-  const { data } = await axios.get(`${ENROLLMENT_API}/${userId}`)
-  return data
-}
+const enrollmentsSlice = createSlice({
+  name: "enrollments",
+  initialState,
+  reducers: {
+    setEnrollments: (state, { payload: enrollment }) => {
+      state.enrollments = enrollment.payload;
+    },
+    enrollCourse: (
+      state,
+      action: PayloadAction<{ userId: string; courseId: string }>
+    ) => {
+      const newEnrollment = {
+        _id: new Date().getTime().toString(),
+        user: action.payload.userId,
+        course: action.payload.courseId,
+      };
+      state.enrollments.push(newEnrollment);
+    },
+    unenrollCourse: (
+      state,
+      action: PayloadAction<{ userId: string; courseId: string }>
+    ) => {
+      state.enrollments = state.enrollments.filter(
+        (enrollment) =>
+          !(
+            enrollment.user === action.payload.userId &&
+            enrollment.course === action.payload.courseId
+          )
+      );
+    },
+    toggleIsEnrolling: (state) => {
+      state.isEnrolling = !state.isEnrolling;
+    },
+  },
+});
 
-export const addEnrollment = async (
-  userId: string,
-  courseId: string
-) => {
-  await axios.post(`${ENROLLMENT_API}/${userId}/${courseId}`)
-}
+export const {
+  setEnrollments,
+  enrollCourse,
+  unenrollCourse,
+  toggleIsEnrolling,
+} = enrollmentsSlice.actions;
 
-export const deleteEnrollment = async (
-  userId: string,
-  courseId: string
-) => {
-  await axios.delete(`${ENROLLMENT_API}/${userId}/${courseId}`)
-}
+export default enrollmentsSlice.reducer;

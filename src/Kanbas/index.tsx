@@ -6,7 +6,7 @@ import Dashboard from "./Dashboard/Dashboard.tsx";
 import KanbasNavigation from "./Navigation.tsx";
 import Courses from "./Courses/index.tsx";
 import ProtectedRoute from "./Account/ProtectedRoute.tsx";
-import * as client from "./Courses/client.ts";
+
 import * as userClient from "./Account/client.ts";
 import * as courseClient from "./Courses/client.ts";
 import { useEffect, useState } from "react";

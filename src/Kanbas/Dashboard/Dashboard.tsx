@@ -177,7 +177,10 @@ export default function Dashboard({
                     </p>
                     
                     <div className="d-flex justify-content-between align-items-center">
-                      <button className="btn btn-primary">Go</button>
+                    <Link
+                        to={`/Kanbas/Courses/${course._id}/Home`}
+                        className='btn btn-primary'
+                      ><button className="btn btn-primary">Go</button></Link>
                       
                       <ProtectedContent roles={["STUDENT"]}>
                         {isEnrolled(course._id) ? (
