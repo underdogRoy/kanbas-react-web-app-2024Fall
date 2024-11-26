@@ -1,40 +1,36 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { enrollments } from "../Database/Database.tsx"
 
-const initialState = {
-  enrollments: enrollments,
-  isEnrolling: false,
+const ENROLLMENTS_KEY = "kanbas-enrollments";
+
+const getInitialState = () => {
+  const savedEnrollments = localStorage.getItem(ENROLLMENTS_KEY);
+  return {
+    enrollments: savedEnrollments ? JSON.parse(savedEnrollments) : [],
+    isEnrolling: false,
+    showAllCourses: true
+  };
 };
 
 const enrollmentsSlice = createSlice({
   name: "enrollments",
-  initialState,
+  initialState: getInitialState(),
   reducers: {
-    setEnrollments: (state, { payload: enrollment }) => {
-      state.enrollments = enrollment.payload;
+    setEnrollments: (state, action) => {
+      state.enrollments = action.payload;
     },
-    enrollCourse: (
-      state,
-      action: PayloadAction<{ userId: string; courseId: string }>
-    ) => {
-      const newEnrollment = {
-        _id: new Date().getTime().toString(),
-        user: action.payload.userId,
-        course: action.payload.courseId,
-      };
-      state.enrollments.push(newEnrollment);
+    setShowAllCourses: (state, action) => {
+      state.showAllCourses = action.payload;
     },
-    unenrollCourse: (
-      state,
-      action: PayloadAction<{ userId: string; courseId: string }>
-    ) => {
+    addEnrollment: (state, action) => {
+      state.enrollments = [...state.enrollments, action.payload];
+      localStorage.setItem(ENROLLMENTS_KEY, JSON.stringify(state.enrollments));
+    },
+    removeEnrollment: (state, action) => {
       state.enrollments = state.enrollments.filter(
-        (enrollment) =>
-          !(
-            enrollment.user === action.payload.userId &&
-            enrollment.course === action.payload.courseId
-          )
+        enrollment => enrollment._id !== action.payload
       );
+      localStorage.setItem(ENROLLMENTS_KEY, JSON.stringify(state.enrollments));
     },
     toggleIsEnrolling: (state) => {
       state.isEnrolling = !state.isEnrolling;
@@ -44,8 +40,9 @@ const enrollmentsSlice = createSlice({
 
 export const {
   setEnrollments,
-  enrollCourse,
-  unenrollCourse,
+  setShowAllCourses,
+  addEnrollment,
+  removeEnrollment,
   toggleIsEnrolling,
 } = enrollmentsSlice.actions;
 

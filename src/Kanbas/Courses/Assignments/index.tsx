@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useParams } from "react-router";
+import { useNavigate, useParams } from "react-router";
 import { useSelector, useDispatch } from "react-redux";
 import { BsGripVertical, BsPlus } from "react-icons/bs";
 import { MdAssignment } from 'react-icons/md';
@@ -35,6 +35,7 @@ export default function Assignments() {
   const dispatch = useDispatch();
   const { assignments } = useSelector((state: any) => state.assignmentsReducer);
   const [searchTerm, setSearchTerm] = useState("");
+  const navigate = useNavigate();
 
   const fetchAssignments = async () => {
     try {
@@ -66,6 +67,7 @@ export default function Assignments() {
     try {
       const createdAssignment = await assignmentsClient.createAssignment(cid, newAssignment);
       dispatch(addAssignment(createdAssignment));
+      navigate(`/Kanbas/Courses/${cid}/Assignments/${createdAssignment._id}`);
     } catch (error) {
       console.error("Error creating assignment:", error);
     }

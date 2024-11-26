@@ -1,38 +1,19 @@
+// enrollments/client.ts
 import axios from "axios";
 
-const REMOTE_SERVER = process.env.REACT_APP_REMOTE_SERVER;
-const ENROLLMENTS_API = `${REMOTE_SERVER}/api/enrollments`;
-// get all enrollments for a user
-export const fetchEnrollments = async (userId: string) => {
-  
-  const { data } = await axios.get(`${ENROLLMENTS_API}/${userId}`);
-  
-  return data;
-};
-export const enrollUser = async (enrollment: any) => {
-  const { data } = await axios.post(ENROLLMENTS_API, enrollment);
-  return data;
-};
-export const unenrollUser = async (enrollment: any) => {
-  
-  const { data } = await axios.delete(
-    `${ENROLLMENTS_API}/${enrollment.user}/${enrollment.course}`
-  );
-  return data;
+const API_BASE = process.env.REACT_APP_API_BASE;
+const ENROLLMENTS_API = `${API_BASE}/api/enrollments`;
+
+export const findAllEnrollments = async () => {
+  const response = await axios.get(ENROLLMENTS_API);
+  return response.data;
 };
 
-export const getAllEnrollments = async () => {
-  const { data } = await axios.get(ENROLLMENTS_API);
-  
-  return data;
+export const enrollInCourse = async (userId: string, courseId: string) => {
+  const response = await axios.post(ENROLLMENTS_API, { userId, courseId });
+  return response.data;
 };
 
-// export const getAllEnrollmentsForCourse = async (courseId: string) => {
-//   const { data } = await axios.get(`${ENROLLMENTS_API}/course/${courseId}`);
-//   return data;
-// };
-
-export const enrollUserWithUsername = async (enrollment: any) => {
-  const { data } = await axios.post(`${ENROLLMENTS_API}/username`, enrollment);
-  return data;
+export const unenrollFromCourse = async (userId: string, courseId: string) => {
+  await axios.delete(`${ENROLLMENTS_API}/${userId}/${courseId}`);
 };
