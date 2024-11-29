@@ -1,8 +1,8 @@
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import * as enrollmentsClient from "../Enrollments/client.ts";
-import { enroll, unenroll } from "../Enrollments/reducer.ts";
-import React from "react";
+import { enroll, unenroll, toggleViewAllCourses, setEnrollments } from "../Enrollments/reducer.ts";
+import React, { useEffect } from "react";
 
 export default function Dashboard({
   courses,
@@ -20,14 +20,23 @@ export default function Dashboard({
   updateCourse: () => void;
 }) {
   const { currentUser } = useSelector((state: any) => state.accountReducer);
+  const { enrollments, viewAllCourses } = useSelector((state: any) => state.enrollmentsReducer);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const isFaculty = currentUser?.role === "FACULTY";
+  const isStudent = currentUser?.role === "STUDENT";
+  useEffect(() => {
+    if (isStudent) {
+      enrollmentsClient.getUserEnrollments(currentUser._id).then((data) => {
+        dispatch(setEnrollments(data));
+      });
+    }
+  }, [currentUser, dispatch, isStudent]);
 
   const handleEnrollToggle = async (courseId: string, enrolled: boolean) => {
     if (!currentUser) return;
-  
+
     try {
       if (enrolled) {
         await enrollmentsClient.unenrollUserFromCourse(currentUser._id, courseId);
@@ -42,7 +51,12 @@ export default function Dashboard({
   };
 
   const navigateToCourse = (courseId: string) => {
-    navigate(`/Kanbas/Courses/${courseId}/Home`);
+    const isEnrolled = enrollments.some((enrollment: any) => enrollment.course === courseId);
+    if (isEnrolled) {
+      navigate(`/Kanbas/Courses/${courseId}/Home`);
+    } else {
+      alert("You are not enrolled in this course.");
+    }
   };
 
   return (
@@ -80,7 +94,9 @@ export default function Dashboard({
       <hr />
 
       <div id="wd-dashboard-courses" className="row row-cols-1 row-cols-md-5 g-4">
-        {courses.map((course) => (
+        {courses
+        .filter((course) => viewAllCourses || enrollments.some((enrollment: any) => enrollment.course === course._id))
+        .map((course) => (
           <div key={course._id} className="col" style={{ width: "300px" }}>
             <div className="card rounded-3 overflow-hidden">
               <Link
@@ -99,16 +115,16 @@ export default function Dashboard({
                     {course.description}
                   </p>
 
-                  {!isFaculty && (
-                    <button
-                      className={`btn ${course.enrolled ? "btn-danger" : "btn-success"}`}
-                      onClick={(e) => {
-                        e.preventDefault();
-                        handleEnrollToggle(course._id, course.enrolled);
-                      }}
-                    >
-                      {course.enrolled ? "Unenroll" : "Enroll"}
-                    </button>
+                  {isStudent && (
+                      <button
+                        className={`btn ${enrollments.some((enrollment: any) => enrollment.course === course._id) ? "btn-danger" : "btn-success"}`}
+                        onClick={(e) => {
+                          e.preventDefault();
+                          handleEnrollToggle(course._id, enrollments.some((enrollment: any) => enrollment.course === course._id));
+                        }}
+                      >
+                        {enrollments.some((enrollment: any) => enrollment.course === course._id) ? "Unenroll" : "Enroll"}
+                      </button>
                   )}
 
                   <button
