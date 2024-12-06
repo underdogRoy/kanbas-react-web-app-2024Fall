@@ -2,6 +2,8 @@ import React from "react";
 import Modules from "../Modules/index.tsx";
 import CourseStatus from "./Status.tsx";
 export default function Home() {
+  
+  
   return (
     <div className="d-flex" id="wd-home">
   <div className="flex-fill">

@@ -12,12 +12,12 @@ import { FaAlignJustify } from "react-icons/fa6";
 export default function Courses({ courses }: { courses: any[]; }) {
   const { cid } = useParams();
   const { pathname } = useLocation();
-  const { enrollments } = useSelector((state: any) => state.enrollmentsReducer);
-  const isEnrolled = enrollments.some((enrollment: any) => enrollment.course === cid);
+  // const { enrollments } = useSelector((state: any) => state.enrollmentsReducer);
+  // const isEnrolled = enrollments.some((enrollment: any) => enrollment.course === cid);
 
-  if (!isEnrolled) {
-    return <Navigate to="/Kanbas/Dashboard" />;
-  }
+  // if (!isEnrolled) {
+  //   return <Navigate to="/Kanbas/Dashboard" />;
+  // }
 
   const course = courses.find((course) => course._id === cid);
 
