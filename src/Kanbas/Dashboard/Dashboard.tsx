@@ -53,11 +53,15 @@ export default function Dashboard({
   };
 
   const navigateToCourse = (courseId: string) => {
-    const isEnrolled = enrollments.some((enrollment: any) => enrollment.course === courseId);
-    if (isEnrolled) {
+    if (isFaculty) {
       navigate(`/Kanbas/Courses/${courseId}/Home`);
     } else {
-      alert("You are not enrolled in this course.");
+      const isEnrolled = enrollments.some((enrollment: any) => enrollment.course === courseId);
+      if (isEnrolled) {
+        navigate(`/Kanbas/Courses/${courseId}/Home`);
+      } else {
+        alert("You are not enrolled in this course.");
+      }
     }
   };
 
